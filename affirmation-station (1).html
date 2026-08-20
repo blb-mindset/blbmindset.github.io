@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Affirmation Station | Best Life Bestie</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<style>
+  :root{
+    --pink:#ff9ecf;
+    --pink-soft:#ffe6f3;
+    --black:#0b0b0d;
+    --white:#ffffff;
+    --pink-deep:#ff6fb0;
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+
+  body{
+    background:var(--white);
+    font-family:'Space Grotesk',sans-serif;
+    color:var(--black);
+    min-height:100vh;
+    overflow-x:hidden;
+  }
+
+  .checker{
+    background-image:
+      linear-gradient(45deg, var(--black) 25%, transparent 25%),
+      linear-gradient(-45deg, var(--black) 25%, transparent 25%),
+      linear-gradient(45deg, transparent 75%, var(--black) 75%),
+      linear-gradient(-45deg, transparent 75%, var(--black) 75%);
+    background-size:28px 28px;
+    background-position:0 0, 0 14px, 14px -14px, -14px 0px;
+    background-color:var(--pink);
+  }
+
+  .checker-strip{
+    height:22px;
+    width:100%;
+  }
+
+  header{
+    position:relative;
+    text-align:center;
+    padding:64px 20px 48px;
+    background:var(--black);
+    overflow:hidden;
+  }
+
+  header::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background-image:
+      linear-gradient(45deg, var(--pink) 25%, transparent 25%),
+      linear-gradient(-45deg, var(--pink) 25%, transparent 25%),
+      linear-gradient(45deg, transparent 75%, var(--pink) 75%),
+      linear-gradient(-45deg, transparent 75%, var(--pink) 75%);
+    background-size:40px 40px;
+    background-position:0 0, 0 20px, 20px -20px, -20px 0px;
+    opacity:0.12;
+  }
+
+  .brand-tag{
+    position:relative;
+    display:inline-block;
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:700;
+    font-size:0.85rem;
+    letter-spacing:4px;
+    text-transform:uppercase;
+    color:var(--black);
+    background:var(--pink);
+    padding:6px 18px;
+    border-radius:20px;
+    margin-bottom:22px;
+  }
+
+  h1{
+    position:relative;
+    font-family:'Anton',sans-serif;
+    font-size:clamp(2.6rem, 8vw, 5.5rem);
+    letter-spacing:2px;
+    color:var(--white);
+    text-transform:uppercase;
+    line-height:0.95;
+  }
+
+  h1 span{color:var(--pink);}
+
+  .tagline{
+    position:relative;
+    color:var(--pink-soft);
+    font-size:1.05rem;
+    margin-top:14px;
+    letter-spacing:0.5px;
+  }
+
+  main{
+    max-width:900px;
+    margin:0 auto;
+    padding:48px 20px 80px;
+  }
+
+  .section-label{
+    font-family:'Anton',sans-serif;
+    font-size:1.5rem;
+    text-transform:uppercase;
+    letter-spacing:1px;
+    margin-bottom:6px;
+    display:flex;
+    align-items:center;
+    gap:12px;
+  }
+
+  .section-label::after{
+    content:"";
+    flex:1;
+    height:10px;
+    background-image:
+      linear-gradient(45deg, var(--black) 25%, transparent 25%),
+      linear-gradient(-45deg, var(--black) 25%, transparent 25%),
+      linear-gradient(45deg, transparent 75%, var(--black) 75%),
+      linear-gradient(-45deg, transparent 75%, var(--black) 75%);
+    background-size:10px 10px;
+    background-position:0 0, 0 5px, 5px -5px, -5px 0px;
+  }
+
+  .sub{
+    color:#555;
+    margin-bottom:24px;
+    font-size:0.95rem;
+  }
+
+  .category-grid{
+    display:flex;
+    flex-wrap:nowrap;
+    gap:12px;
+    margin-bottom:50px;
+    overflow-x:auto;
+    padding-bottom:8px;
+    -webkit-overflow-scrolling:touch;
+    scrollbar-width:thin;
+    scrollbar-color:var(--black) transparent;
+  }
+
+  .category-grid::-webkit-scrollbar{ height:6px; }
+  .category-grid::-webkit-scrollbar-thumb{ background:var(--black); border-radius:4px; }
+
+  .cat-btn{
+    position:relative;
+    flex:1 1 0;
+    min-width:110px;
+    border:3px solid var(--black);
+    background:var(--white);
+    padding:18px 10px;
+    font-family:'Anton',sans-serif;
+    font-size:0.95rem;
+    text-transform:uppercase;
+    letter-spacing:0.5px;
+    cursor:pointer;
+    transition:transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease, color 0.15s ease;
+    box-shadow:5px 5px 0 var(--black);
+    white-space:nowrap;
+  }
+
+  @media (max-width:640px){
+    .cat-btn{ flex:0 0 auto; min-width:118px; }
+  }
+
+  .cat-btn:hover{
+    transform:translate(-2px,-2px);
+    box-shadow:7px 7px 0 var(--black);
+  }
+
+  .cat-btn:active{
+    transform:translate(3px,3px);
+    box-shadow:1px 1px 0 var(--black);
+  }
+
+  .cat-btn.active{
+    background:var(--pink);
+    color:var(--white);
+  }
+
+  .cat-btn .emoji{
+    display:block;
+    font-size:1.4rem;
+    margin-bottom:4px;
+  }
+
+  /* Affirmation ticket card */
+  .ticket{
+    position:relative;
+    background:var(--black);
+    color:var(--white);
+    border-radius:18px;
+    padding:46px 32px;
+    text-align:center;
+    min-height:180px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    overflow:hidden;
+    box-shadow:0 10px 0 var(--pink-deep);
+  }
+
+  .ticket::before, .ticket::after{
+    content:"";
+    position:absolute;
+    top:0;
+    bottom:0;
+    width:26px;
+    background-image:
+      linear-gradient(45deg, var(--pink) 25%, transparent 25%),
+      linear-gradient(-45deg, var(--pink) 25%, transparent 25%),
+      linear-gradient(45deg, transparent 75%, var(--pink) 75%),
+      linear-gradient(-45deg, transparent 75%, var(--pink) 75%);
+    background-size:13px 13px;
+    background-position:0 0, 0 6.5px, 6.5px -6.5px, -6.5px 0px;
+  }
+
+  .ticket::before{ left:0; }
+  .ticket::after{ right:0; }
+
+  #affirmation-text{
+    font-family:'Anton',sans-serif;
+    font-size:clamp(1.4rem, 4vw, 2.1rem);
+    line-height:1.3;
+    max-width:640px;
+    text-transform:uppercase;
+    padding:0 20px;
+  }
+
+  .ticket-meta{
+    position:absolute;
+    top:14px;
+    left:44px;
+    font-size:0.7rem;
+    letter-spacing:2px;
+    color:var(--pink);
+    text-transform:uppercase;
+  }
+
+  .actions{
+    display:flex;
+    justify-content:center;
+    gap:14px;
+    margin-top:26px;
+    flex-wrap:wrap;
+  }
+
+  .btn{
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:700;
+    text-transform:uppercase;
+    letter-spacing:0.5px;
+    padding:14px 26px;
+    border:3px solid var(--black);
+    background:var(--pink);
+    color:var(--black);
+    cursor:pointer;
+    box-shadow:4px 4px 0 var(--black);
+    transition:transform 0.15s ease, box-shadow 0.15s ease;
+    font-size:0.9rem;
+  }
+
+  .btn.outline{
+    background:var(--white);
+  }
+
+  .btn:hover{
+    transform:translate(-2px,-2px);
+    box-shadow:6px 6px 0 var(--black);
+  }
+  .btn:active{
+    transform:translate(2px,2px);
+    box-shadow:2px 2px 0 var(--black);
+  }
+
+  /* QR section */
+  .qr-wrap{
+    margin-top:70px;
+    display:flex;
+    flex-wrap:wrap;
+    gap:32px;
+    align-items:center;
+    justify-content:center;
+    background:var(--pink-soft);
+    border:3px solid var(--black);
+    border-radius:18px;
+    padding:34px;
+  }
+
+  .qr-box{
+    background:var(--white);
+    border:4px solid var(--black);
+    border-radius:14px;
+    padding:16px;
+    box-shadow:6px 6px 0 var(--pink);
+    flex-shrink:0;
+  }
+
+  #qrcode{ line-height:0; }
+  #qrcode img{ display:block; }
+
+  .qr-copy{
+    max-width:360px;
+  }
+
+  .qr-copy h3{
+    font-family:'Anton',sans-serif;
+    text-transform:uppercase;
+    font-size:1.6rem;
+    margin-bottom:10px;
+    letter-spacing:0.5px;
+  }
+
+  .qr-copy p{
+    color:#333;
+    font-size:0.95rem;
+    line-height:1.5;
+    margin-bottom:14px;
+  }
+
+  .url-pill{
+    display:inline-block;
+    background:var(--black);
+    color:var(--white);
+    font-size:0.8rem;
+    padding:8px 14px;
+    border-radius:20px;
+    word-break:break-all;
+  }
+
+  footer{
+    text-align:center;
+    padding:26px 20px 40px;
+    font-size:0.8rem;
+    color:#777;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ transition:none !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="checker checker-strip"></div>
+
+<header>
+  <span class="brand-tag">Best Life Bestie</span><br>
+  <h1>Affirmation<br><span>Station</span></h1>
+  <p class="tagline">Scan. Pick a vibe. Get your daily dose.</p>
+</header>
+
+<div class="checker checker-strip"></div>
+
+<main>
+
+  <div class="section-label">What do you need right now?</div>
+  <p class="sub">Tap one to pull a fresh affirmation from that deck.</p>
+
+  <div class="category-grid" id="categoryGrid"></div>
+
+  <div class="ticket">
+    <span class="ticket-meta" id="ticketMeta">SELF-LOVE · NO. 01</span>
+    <p id="affirmation-text">Pick a category above to reveal your affirmation.</p>
+  </div>
+
+  <div class="actions">
+    <button class="btn" id="newBtn">New Affirmation ↻</button>
+    <button class="btn outline" id="copyBtn">Copy Text</button>
+  </div>
+
+  <div class="qr-wrap">
+    <div class="qr-box">
+      <div id="qrcode"></div>
+    </div>
+    <div class="qr-copy">
+      <h3>Take it with you</h3>
+      <p>Print this QR code on cards, mirrors, or packaging. Anyone who scans it lands right here and can pick their own category of affirmations.</p>
+      <span class="url-pill" id="urlPill"></span>
+    </div>
+  </div>
+
+</main>
+
+<div class="checker checker-strip"></div>
+
+<footer>A Best Life Bestie creation — a new affirmation is always one tap away.</footer>
+
+<script>
+  const categories = {
+    "Self-Love": {
+      emoji: "⛓",
+      list: [
+        "I am worthy of love exactly as I am.",
+        "I treat myself with the same kindness I give others.",
+        "My worth is not up for debate.",
+        "I am allowed to take up space.",
+        "I choose to speak to myself with compassion.",
+        "I am proud of who I am becoming.",
+        "I honor my needs without guilt.",
+        "I deserve the same grace I extend to others.",
+        "I am enough, right now, as I am.",
+        "I forgive myself and keep moving forward."
+      ]
+    },
+    "Confidence": {
+      emoji: "⚡",
+      list: [
+        "I trust myself to handle whatever comes my way.",
+        "My voice matters and deserves to be heard.",
+        "I walk into every room as I am.",
+        "I am capable of more than I know.",
+        "I back myself, even when it's hard.",
+        "I don't need permission to believe in myself.",
+        "I stand tall in who I am.",
+        "My confidence grows every time I show up.",
+        "I am not afraid to take up space.",
+        "I trust my decisions and own them fully."
+      ]
+    },
+    "Calm": {
+      emoji: "🌙",
+      list: [
+        "I am safe in this moment.",
+        "I release what I cannot control.",
+        "My breath is steady and so am I.",
+        "Peace is always available to me.",
+        "I let go of tension I don't need to carry.",
+        "I am grounded, no matter what's around me.",
+        "This moment is enough.",
+        "I choose calm over chaos.",
+        "I give myself permission to slow down.",
+        "Stillness is where I find my strength."
+      ]
+    },
+    "Success": {
+      emoji: "🔥",
+      list: [
+        "I am building the life I want, one step at a time.",
+        "My effort today shapes my future.",
+        "I am capable of achieving my goals.",
+        "Every challenge makes me sharper.",
+        "I define what success looks like for me.",
+        "I celebrate progress, not just perfection.",
+        "I am disciplined and driven toward my dreams.",
+        "Opportunities find me because I show up.",
+        "I turn obstacles into momentum.",
+        "My hard work is paying off."
+      ]
+    },
+    "Gratitude": {
+      emoji: "◆",
+      list: [
+        "I notice the good, even on hard days.",
+        "I am thankful for how far I've come.",
+        "There is always something to appreciate.",
+        "I appreciate the people who show up for me.",
+        "Gratitude keeps my heart open.",
+        "I am thankful for this body and all it does for me.",
+        "Small moments of joy are still joy.",
+        "I count today's blessings, big and small.",
+        "I am grateful for another chance to try again.",
+        "Abundance surrounds me when I look for it."
+      ]
+    },
+    "Growth": {
+      emoji: "▲",
+      list: [
+        "I am always growing, even when I can't see it.",
+        "Mistakes are proof I'm trying.",
+        "I welcome change as a chance to expand.",
+        "I am not who I was yesterday.",
+        "Every setback teaches me something useful.",
+        "I choose progress over perfection.",
+        "I am becoming the person I'm proud of.",
+        "Discomfort means I am growing.",
+        "I trust the process, even when it's slow.",
+        "I am exactly where I need to be to grow."
+      ]
+    }
+  };
+
+  const grid = document.getElementById('categoryGrid');
+  const textEl = document.getElementById('affirmation-text');
+  const metaEl = document.getElementById('ticketMeta');
+  let currentCat = null;
+  let currentIndex = 0;
+  let usedOrder = [];
+
+  Object.keys(categories).forEach((name, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'cat-btn';
+    btn.innerHTML = `<span class="emoji">${categories[name].emoji}</span>${name}`;
+    btn.addEventListener('click', () => selectCategory(name, btn));
+    grid.appendChild(btn);
+  });
+
+  function selectCategory(name, btnEl){
+    document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+    btnEl.classList.add('active');
+    currentCat = name;
+    showRandom();
+  }
+
+  function showRandom(){
+    if(!currentCat) return;
+    const list = categories[currentCat].list;
+    let idx = Math.floor(Math.random() * list.length);
+    if(list.length > 1 && idx === currentIndex) idx = (idx + 1) % list.length;
+    currentIndex = idx;
+    textEl.style.opacity = 0;
+    setTimeout(() => {
+      textEl.textContent = list[idx];
+      metaEl.textContent = `${currentCat.toUpperCase()} · NO. ${String(idx+1).padStart(2,'0')}`;
+      textEl.style.opacity = 1;
+    }, 150);
+  }
+
+  textEl.style.transition = 'opacity 0.15s ease';
+
+  document.getElementById('newBtn').addEventListener('click', () => {
+    if(!currentCat){
+      const firstBtn = document.querySelector('.cat-btn');
+      selectCategory(Object.keys(categories)[0], firstBtn);
+      return;
+    }
+    showRandom();
+  });
+
+  document.getElementById('copyBtn').addEventListener('click', () => {
+    navigator.clipboard.writeText(textEl.textContent).then(() => {
+      const btn = document.getElementById('copyBtn');
+      const old = btn.textContent;
+      btn.textContent = 'Copied!';
+      setTimeout(() => btn.textContent = old, 1200);
+    });
+  });
+
+  // QR code of the page itself
+  const pageUrl = window.location.href;
+  document.getElementById('urlPill').textContent = pageUrl;
+  new QRCode(document.getElementById('qrcode'), {
+    text: pageUrl,
+    width: 160,
+    height: 160,
+    colorDark: "#0b0b0d",
+    colorLight: "#ffffff",
+    correctLevel: QRCode.CorrectLevel.H
+  });
+</script>
+
+</body>
+</html>
