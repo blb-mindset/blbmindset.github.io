@@ -1,1 +1,0 @@
-# blbmindset.github.io
